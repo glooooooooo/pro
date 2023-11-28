@@ -1,21 +1,27 @@
 import sqlite3
 
 def create_and_fill_table(file_path):
-    conn = sqlite3.connect('d.db')
-    cursor = conn.cursor()
+    try:
+        conn = sqlite3.connect('d.db')
+        cursor = conn.cursor()
 
-    cursor.execute('''CREATE TABLE IF NOT EXISTS data
-                      (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age INTEGER, occupation TEXT)''')
+        cursor.execute('''CREATE TABLE IF NOT EXISTS data
+                          (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, age INTEGER, occupation TEXT)''')
 
-    with open(file_path, 'r') as file:
-        for line in file:
-            data_parts = line.strip().split(',')
-            
-            cursor.execute("INSERT INTO data (name, age, occupation) VALUES (?, ?, ?)",
+        with open(file_path, 'r') as file:
+            for line in file:
+                data_parts = line.strip().split(',')
+                
+                cursor.execute("INSERT INTO data (name, age, occupation) VALUES (?, ?, ?)",
                                (data_parts[0], data_parts[1], data_parts[2]))
-            
-    conn.commit()
-    conn.close()
 
-file_path = '6.txt'  
+        conn.commit()
+        conn.close()
+
+        print("Таблица успешно создана и заполнена данными.")
+    except Exception as e:
+        print(f"Произошла ошибка: {e}")
+
+# Пример использования функции
+file_path = '6.txt'
 create_and_fill_table(file_path)
