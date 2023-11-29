@@ -1,0 +1,27 @@
+class Publisher:
+    def __init__(self):
+        self._subscribers = []
+
+    def add_subscriber(self, subscriber):
+        self._subscribers.append(subscriber)
+
+    def remove_subscriber(self, subscriber):
+        self._subscribers.remove(subscriber)
+
+    def notify_subscribers(self, message):
+        for subscriber in self._subscribers:
+            subscriber.update(message)
+
+class SimpleSubscriber:
+    def update(self, message):
+        print(f"Received message: {message}")
+
+# Пример использования
+publisher = Publisher()
+subscriber1 = SimpleSubscriber()
+subscriber2 = SimpleSubscriber()
+publisher.add_subscriber(subscriber1) #добавление подписчика
+publisher.add_subscriber(subscriber2) #добавление подписчика
+publisher.notify_subscribers("Спасибо за подписку:)") #уведомление
+publisher.remove_subscriber(subscriber2) #удаление подписчика
+publisher.notify_subscribers("хе:)") #уведомление
